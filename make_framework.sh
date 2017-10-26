@@ -1,0 +1,17 @@
+#!/bin/sh
+
+rm -rf "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+mkdir "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Headers"
+mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Modules"
+mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Resources"
+cp "${BUILT_PRODUCTS_DIR}/lib${PRODUCT_NAME}.a" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/${PRODUCT_NAME}"
+find "${BUILT_PRODUCTS_DIR}" -name "*.h" |xargs -I {} cp {} "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Headers"
+cp "$(dirname "$SRCROOT")/modules/$PRODUCT_NAME-umbrella.h" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Headers"
+cp "$(dirname "$SRCROOT")/modules/module.modulemap" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Modules"
+find "${BUILT_PRODUCTS_DIR}" -name "*.plist" |xargs -I {} cp {} "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Resources"
+ln -s "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Headers" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers"
+ln -s "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Modules" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Modules"
+ln -s "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/Resources" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Resources"
+ln -s "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A/${PRODUCT_NAME}" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}"
+ln -s "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/A" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Version/Current"

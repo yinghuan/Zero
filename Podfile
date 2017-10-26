@@ -25,7 +25,7 @@ post_install do |installer|
     			copy_headers_phases.add_file_reference(header_file.file_ref, true)
     		end
     		make_module_phase = target.new_shell_script_build_phase("Make Fake Module")
-    		make_module_phase.shell_script = "../make_fake_module.sh"
+    		make_module_phase.shell_script = "../make_framework.sh"
     	end
     end
 end
